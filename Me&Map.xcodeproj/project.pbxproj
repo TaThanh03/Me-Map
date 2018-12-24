@@ -18,7 +18,6 @@
 		130B9D7B21CBC42A00EC1314 /* OneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B9D7A21CBC42A00EC1314 /* OneCell.swift */; };
 		130B9D7D21CBC48300EC1314 /* MyCustomTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B9D7C21CBC48300EC1314 /* MyCustomTabController.swift */; };
 		130B9D7F21CBC50D00EC1314 /* SomeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B9D7E21CBC50D00EC1314 /* SomeTypes.swift */; };
-		13A6401321D021320054DA61 /* key_map_google.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13A6401221D021320054DA61 /* key_map_google.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +55,6 @@
 		130B9D7A21CBC42A00EC1314 /* OneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCell.swift; sourceTree = "<group>"; };
 		130B9D7C21CBC48300EC1314 /* MyCustomTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomTabController.swift; sourceTree = "<group>"; };
 		130B9D7E21CBC50D00EC1314 /* SomeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeTypes.swift; sourceTree = "<group>"; };
-		13A6401221D021320054DA61 /* key_map_google.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = key_map_google.txt; path = ../../APIkey/key_map_google.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +113,6 @@
 				130B9D7E21CBC50D00EC1314 /* SomeTypes.swift */,
 				130B9D4E21CBC24C00EC1314 /* Main.storyboard */,
 				130B9D5121CBC24D00EC1314 /* Assets.xcassets */,
-				13A6401221D021320054DA61 /* key_map_google.txt */,
 				130B9D5321CBC24D00EC1314 /* LaunchScreen.storyboard */,
 				130B9D5621CBC24D00EC1314 /* Info.plist */,
 			);
@@ -246,7 +243,6 @@
 			files = (
 				130B9D5521CBC24D00EC1314 /* LaunchScreen.storyboard in Resources */,
 				130B9D5221CBC24D00EC1314 /* Assets.xcassets in Resources */,
-				13A6401321D021320054DA61 /* key_map_google.txt in Resources */,
 				130B9D5021CBC24C00EC1314 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
