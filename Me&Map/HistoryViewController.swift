@@ -32,39 +32,69 @@ class HistoryViewController: UITableViewController {
     
     @objc func saveData (sender: UIBarButtonItem) {
         print("saveData")
-        let coder = NSKeyedArchiver(requiringSecureCoding: false)
-        
-        var content = [OneCell]()
+        var d : MyData?
         if let tbc = self.tabBarController as? MyCustomTabController {
-            content = tbc.content
+            print("saveData tbc")
+            d = MyData(c: tbc.content, i: tbc.index)
         }
         if let svc = self.splitViewController as? MyCustomSplitViewController {
-            content = svc.content
+            print("saveData svc")
+            d = MyData(c: svc.content, i: svc.index)
         }
-        coder.encode(content, forKey: NSKeyedArchiveRootObjectKey)
+        /*let coder = NSKeyedArchiver(requiringSecureCoding: false)
+        coder.encode(d, forKey: NSKeyedArchiveRootObjectKey)
         FileManager.default.createFile(atPath: thePath, contents: coder.encodedData, attributes: [:])
+        */
+        
+        //For old device
+        let res = NSKeyedArchiver.archiveRootObject(d, toFile: thePath)
+        if !res {
+            let a = UIAlertController(title: "Error", message: "Can not backup", preferredStyle: .alert)
+            a.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        }
+ 
     }
     
     func loadData() {
         //Fetch data
         if FileManager.default.fileExists(atPath: thePath) {
+            print("Start decoding")
+            let d = NSKeyedUnarchiver.unarchiveObject(withFile: thePath) as! MyData?
+            if let tbc = self.tabBarController as? MyCustomTabController {
+                tbc.content = d!.content
+                tbc.index = d!.index
+                print("Decoding data success")
+            }
+            if let svc = self.splitViewController as? MyCustomSplitViewController {
+                svc.content = d!.content
+                svc.index = d!.index
+                print("Decoding data success")
+            }
+        }
+        /*if FileManager.default.fileExists(atPath: thePath) {
+            print("Start decoding")
             let data = FileManager.default.contents(atPath: thePath)
             if data != nil {
                 do {
                     let decoder = try NSKeyedUnarchiver(forReadingFrom: data!)
                     decoder.requiresSecureCoding = false
-                    let d = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data!) as? [OneCell]
+                    let d = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data!) as? MyData
+ 
                     if let tbc = self.tabBarController as? MyCustomTabController {
-                        tbc.content = d!
+                        tbc.content = d!.content
+                        tbc.index = d!.index
+                        print("Decoding data success")
                     }
                     if let svc = self.splitViewController as? MyCustomSplitViewController {
-                        svc.content = d!
+                        svc.content = d!.content
+                        svc.index = d!.index
+                        print("Decoding data success")
                     }
                 } catch {
                     print("Decoding failed!!!")
                 }
             }
-        }
+        }*/
     }
     
     

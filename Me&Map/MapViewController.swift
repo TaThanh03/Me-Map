@@ -129,10 +129,7 @@ class MapViewController: UIViewController {
             let sLocation = s.mySlice(from: "<location>", to: "</location>")
             let sLattitude = Double((sLocation!.mySlice(from: "<lat>", to: "</lat>"))!)
             let sLongitude = Double((sLocation!.mySlice(from: "<lng>", to: "</lng>"))!)
-            print("DATA===================")
-            print(sStatus ?? "sStatus = NULL")
-            print(s)
-            print("=======================")
+            print(sStatus!)
             addCell(address: sAddress!, lattitude: sLattitude!, longitude: sLongitude!)
             updateLocation(lat: sLattitude!, lng: sLongitude!)
         } else {

@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class OneCell: NSObject , NSCoding {
+class OneCell: NSObject {
     enum Keys: String {
         case address = "address"
         case lattitude = "lattitude"
@@ -23,7 +23,6 @@ class OneCell: NSObject , NSCoding {
         lattitude = lat
         longitude = lng
     }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init()
         address = aDecoder.decodeObject(forKey: Keys.address.rawValue) as! String

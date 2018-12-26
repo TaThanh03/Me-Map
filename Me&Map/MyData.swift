@@ -8,7 +8,24 @@
 
 import UIKit
 
-class MyData: NSObject {
+class MyData: NSObject, NSCoding {
+    var content = [OneCell]()
+    var index = 0
+    init(c: [OneCell], i: Int) {
+        super.init()
+        content = c
+        index = i
+    }
+    required init?(coder aDecoder: NSCoder) {
+        super.init()
+        content = aDecoder.decodeObject(forKey: "cellList") as! [OneCell]
+        index = aDecoder.decodeObject(forKey: "index") as! Int
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(content, forKey: "cellList")
+        aCoder.encode(index, forKey: "index")
+    }
     /*
     private let rep = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     private var thePath : String

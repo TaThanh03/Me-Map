@@ -114,13 +114,13 @@
 				136F641D21D2FDB70074A763 /* MyCustomSplitViewController.swift */,
 				130B9D4C21CBC24C00EC1314 /* MapViewController.swift */,
 				130B9D7821CBC3E600EC1314 /* HistoryViewController.swift */,
+				136F641F21D320670074A763 /* MyData.swift */,
 				130B9D7A21CBC42A00EC1314 /* OneCell.swift */,
 				130B9D7E21CBC50D00EC1314 /* SomeTypes.swift */,
 				130B9D4E21CBC24C00EC1314 /* Main.storyboard */,
 				130B9D5121CBC24D00EC1314 /* Assets.xcassets */,
 				130B9D5321CBC24D00EC1314 /* LaunchScreen.storyboard */,
 				130B9D5621CBC24D00EC1314 /* Info.plist */,
-				136F641F21D320670074A763 /* MyData.swift */,
 			);
 			path = "Me&Map";
 			sourceTree = "<group>";

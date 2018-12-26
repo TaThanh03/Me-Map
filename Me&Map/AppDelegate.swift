@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    private func identifyDevice () -> SomeTypes.DeviceType {
+    func identifyDevice () -> SomeTypes.DeviceType {
         var myDevice : SomeTypes.DeviceType?
         let h = UIScreen.main.bounds.size.height
         let w = UIScreen.main.bounds.size.width
