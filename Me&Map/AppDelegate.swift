@@ -58,18 +58,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         default: //ipad
             print("detected iPad")
-            /*
             let svc = MyCustomSplitViewController()
             let vc1 = HistoryViewController(style: .plain)
             let vc2 = MapViewController()
             let nvc1 = UINavigationController(rootViewController: vc1)
             let nvc2 = UINavigationController(rootViewController: vc2)
             svc.viewControllers = [nvc1, nvc2]
-            svc.delegate = svc //stupide ?
+            //svc.delegate = svc //stupide ?
             svc.preferredDisplayMode = .primaryHidden
             window?.rootViewController = svc
-            */
         }
+        
         window?.makeKeyAndVisible()
         return true
     }

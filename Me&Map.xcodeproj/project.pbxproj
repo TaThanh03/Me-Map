@@ -18,6 +18,8 @@
 		130B9D7B21CBC42A00EC1314 /* OneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B9D7A21CBC42A00EC1314 /* OneCell.swift */; };
 		130B9D7D21CBC48300EC1314 /* MyCustomTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B9D7C21CBC48300EC1314 /* MyCustomTabController.swift */; };
 		130B9D7F21CBC50D00EC1314 /* SomeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B9D7E21CBC50D00EC1314 /* SomeTypes.swift */; };
+		136F641E21D2FDB70074A763 /* MyCustomSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136F641D21D2FDB70074A763 /* MyCustomSplitViewController.swift */; };
+		136F642021D320670074A763 /* MyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136F641F21D320670074A763 /* MyData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		130B9D7A21CBC42A00EC1314 /* OneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCell.swift; sourceTree = "<group>"; };
 		130B9D7C21CBC48300EC1314 /* MyCustomTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomTabController.swift; sourceTree = "<group>"; };
 		130B9D7E21CBC50D00EC1314 /* SomeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeTypes.swift; sourceTree = "<group>"; };
+		136F641D21D2FDB70074A763 /* MyCustomSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomSplitViewController.swift; sourceTree = "<group>"; };
+		136F641F21D320670074A763 /* MyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 			children = (
 				130B9D4A21CBC24C00EC1314 /* AppDelegate.swift */,
 				130B9D7C21CBC48300EC1314 /* MyCustomTabController.swift */,
+				136F641D21D2FDB70074A763 /* MyCustomSplitViewController.swift */,
 				130B9D4C21CBC24C00EC1314 /* MapViewController.swift */,
 				130B9D7821CBC3E600EC1314 /* HistoryViewController.swift */,
 				130B9D7A21CBC42A00EC1314 /* OneCell.swift */,
@@ -115,6 +120,7 @@
 				130B9D5121CBC24D00EC1314 /* Assets.xcassets */,
 				130B9D5321CBC24D00EC1314 /* LaunchScreen.storyboard */,
 				130B9D5621CBC24D00EC1314 /* Info.plist */,
+				136F641F21D320670074A763 /* MyData.swift */,
 			);
 			path = "Me&Map";
 			sourceTree = "<group>";
@@ -272,8 +278,10 @@
 				130B9D4D21CBC24C00EC1314 /* MapViewController.swift in Sources */,
 				130B9D7B21CBC42A00EC1314 /* OneCell.swift in Sources */,
 				130B9D7D21CBC48300EC1314 /* MyCustomTabController.swift in Sources */,
+				136F641E21D2FDB70074A763 /* MyCustomSplitViewController.swift in Sources */,
 				130B9D4B21CBC24C00EC1314 /* AppDelegate.swift in Sources */,
 				130B9D7F21CBC50D00EC1314 /* SomeTypes.swift in Sources */,
+				136F642021D320670074A763 /* MyData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +459,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GDYRU62339;
 				INFOPLIST_FILE = "Me&Map/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -469,6 +478,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GDYRU62339;
 				INFOPLIST_FILE = "Me&Map/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

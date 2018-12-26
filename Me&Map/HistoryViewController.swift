@@ -9,6 +9,8 @@
 import UIKit
 
 class HistoryViewController: UITableViewController {
+    private let rep = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    private var thePath = ""
     
     override init(style: UITableView.Style) {
         super.init(style: style)
@@ -22,12 +24,47 @@ class HistoryViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = false
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem
-        let buttonSave = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveAddress(sender:)))
+        let buttonSave = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveData(sender:)))
         self.navigationItem.rightBarButtonItem = buttonSave
+        
+        thePath = rep[0] + "/meAndMapLocations"
     }
     
-    @objc func saveAddress (sender: UIBarButtonItem) {
-        print("saveAddress")
+    @objc func saveData (sender: UIBarButtonItem) {
+        print("saveData")
+        let coder = NSKeyedArchiver(requiringSecureCoding: false)
+        
+        var content = [OneCell]()
+        if let tbc = self.tabBarController as? MyCustomTabController {
+            content = tbc.content
+        }
+        if let svc = self.splitViewController as? MyCustomSplitViewController {
+            content = svc.content
+        }
+        coder.encode(content, forKey: NSKeyedArchiveRootObjectKey)
+        FileManager.default.createFile(atPath: thePath, contents: coder.encodedData, attributes: [:])
+    }
+    
+    func loadData() {
+        //Fetch data
+        if FileManager.default.fileExists(atPath: thePath) {
+            let data = FileManager.default.contents(atPath: thePath)
+            if data != nil {
+                do {
+                    let decoder = try NSKeyedUnarchiver(forReadingFrom: data!)
+                    decoder.requiresSecureCoding = false
+                    let d = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data!) as? [OneCell]
+                    if let tbc = self.tabBarController as? MyCustomTabController {
+                        tbc.content = d!
+                    }
+                    if let svc = self.splitViewController as? MyCustomSplitViewController {
+                        svc.content = d!
+                    }
+                } catch {
+                    print("Decoding failed!!!")
+                }
+            }
+        }
     }
     
     
@@ -37,6 +74,7 @@ class HistoryViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadData()
         self.tableView.reloadData()
     }
     
@@ -45,24 +83,15 @@ class HistoryViewController: UITableViewController {
         if let tbc = self.tabBarController as? MyCustomTabController {
             return tbc.content.count
         }
-        /*
         if let svc = self.splitViewController as? MyCustomSplitViewController {
             return svc.content.count
-        }*/
+        }
         print("ERROR")
         return 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let tbc = self.tabBarController as? MyCustomTabController {
-            return tbc.content[section].count
-        }
-        /*
-        if let svc = self.splitViewController as? MyCustomSplitViewController {
-            return svc.content[section].count
-        }*/
-        print("ERROR")
-        return 0
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,14 +99,14 @@ class HistoryViewController: UITableViewController {
         var cell = tableView.dequeueReusableCell(withIdentifier: cellId)
         var cont : OneCell?
         if let tbc = self.tabBarController as? MyCustomTabController {
-            cont = tbc.content[indexPath.section][indexPath.row]
+            cont = tbc.content[indexPath.section]
+        } else if let svc = self.splitViewController as? MyCustomSplitViewController {
+            cont = svc.content[indexPath.section]
+        } else {
+            print("cellForRowAt ERROR")
         }
-        /*
-        if let svc = self.splitViewController as? MyCustomSplitViewController {
-            cont = svc.content[indexPath.section][indexPath.row]
-        }*/
         cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
-        cell!.textLabel?.text = cont!.label
+        cell!.textLabel?.text = cont!.address
         return cell!
     }
     
@@ -86,4 +115,15 @@ class HistoryViewController: UITableViewController {
         return 30.0
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.section)
+        if let tbc = self.tabBarController as? MyCustomTabController {
+            tbc.index = indexPath.section
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMap"), object: nil)
+        } else if let svc = self.splitViewController as? MyCustomSplitViewController {
+            svc.index = indexPath.section
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMap"), object: nil)
+        }
+    }
 }
+

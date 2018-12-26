@@ -35,11 +35,11 @@ class MapViewController: UIViewController {
         //MapView
         map.isScrollEnabled = true
         map.isZoomEnabled = true
-        map.delegate = self
         
         //TextField
         textField.backgroundColor = UIColor.white
         textField.becomeFirstResponder()
+        textField.delegate = self
         
         //DELETE THIS!!!!!!!!
         map_API_key = ""
@@ -60,7 +60,8 @@ class MapViewController: UIViewController {
         self.view.addSubview(map)
         self.view.addSubview(mapMode)
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMap), name: NSNotification.Name(rawValue: "updateMap"), object: nil)
+
         self.displayInSize(size: UIScreen.main.bounds.size)
     }
     
@@ -70,6 +71,10 @@ class MapViewController: UIViewController {
         textField.frame = CGRect(x: 0, y: top, width: Int(size.width), height: 30)
         map.frame = CGRect(x: 0, y: top + 35, width: Int(size.width), height: Int(size.height - 100))
         mapMode.frame = CGRect(x: 60, y: top + 40, width: Int(size.width - 120), height: 30)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        displayInSize(size: size)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -85,7 +90,6 @@ class MapViewController: UIViewController {
         }
         if sender.selectedSegmentIndex == 2 {
             map.mapType = .hybrid
-            fetchData()
         }
     }
     
@@ -120,31 +124,63 @@ class MapViewController: UIViewController {
     func handleData(_ d: Data){
         let s = String(decoding: d, as: UTF8.self)
         let sStatus = s.mySlice(from: "<status>", to: "</status>")
-        let sAddress = s.mySlice(from: "<formatted_address>", to: "</formatted_address>")
-        let sLocation = s.mySlice(from: "<location>", to: "</location>")
-        let sLattitude = sLocation?.mySlice(from: "<lat>", to: "</lat>")
-        let sLongitude = sLocation?.mySlice(from: "<lng>", to: "</lng>")
-        print("DATA===================")
-        print(sStatus ?? "sStatus = NULL")
-        print(s)
-        print("=======================")
-        newCell()
-        updateMap()
+        if sStatus == "OK" {
+            let sAddress = s.mySlice(from: "<formatted_address>", to: "</formatted_address>")
+            let sLocation = s.mySlice(from: "<location>", to: "</location>")
+            let sLattitude = Double((sLocation!.mySlice(from: "<lat>", to: "</lat>"))!)
+            let sLongitude = Double((sLocation!.mySlice(from: "<lng>", to: "</lng>"))!)
+            print("DATA===================")
+            print(sStatus ?? "sStatus = NULL")
+            print(s)
+            print("=======================")
+            addCell(address: sAddress!, lattitude: sLattitude!, longitude: sLongitude!)
+            updateLocation(lat: sLattitude!, lng: sLongitude!)
+        } else {
+            print("handleData ERROR")
+        }
     }
     
-    func newCell(){
+    @objc func updateMap(){
+        var cont : OneCell?
+        if let tbc = self.tabBarController as? MyCustomTabController {
+            cont = tbc.content[tbc.index]
+            print(cont?.lattitude as Any, cont?.longitude as Any)
+        } else if let svc = self.splitViewController as? MyCustomSplitViewController {
+            cont = svc.content[svc.index]
+        } else {
+            print("updateMap ERROR")
+        }
+        updateLocation(lat: (cont?.lattitude)!, lng: (cont?.longitude)!)
     }
     
-    func updateMap() {
-        
+    
+    @objc func addCell(address: String, lattitude: Double, longitude: Double) {
+        let newCell = OneCell(add: address, lat: lattitude, lng: longitude)
+        if let tbc = self.tabBarController as? MyCustomTabController {
+            tbc.content.append(newCell)
+        } else if let svc = self.splitViewController as? MyCustomSplitViewController {
+            svc.content.append(newCell)
+        } else {
+            print("error put in table")
+        }
     }
     
+    func updateLocation(lat: Double, lng: Double) {
+        let thisLocation = CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
+        // Map update
+        let span = MKCoordinateSpan(latitudeDelta: 0.035, longitudeDelta: 0.035)
+        let region = MKCoordinateRegion(center: thisLocation, span: span)
+        map.setRegion(region, animated: true)
+    }
 }
 
 
-extension MapViewController : MKMapViewDelegate {
-    
+
+extension MapViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("textFieldShouldReturn ======")
+        textField.resignFirstResponder()
+        fetchData()
+        return true
+    }
 }
-
-
-
